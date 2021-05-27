@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 public class EmploeeSaveInputModel {
 
-   // private int empid;
     private String name;
     private String email;
     private String contactNo;
@@ -21,7 +20,6 @@ public class EmploeeSaveInputModel {
             return null;
         }
         Employee employee =new Employee();
-      //  employee.setEmpid(inputmodel.getEmpid());
         employee.setName(inputmodel.getName());
         employee.setEmail(inputmodel.getEmail());
         employee.setContactno(inputmodel.getContactNo());

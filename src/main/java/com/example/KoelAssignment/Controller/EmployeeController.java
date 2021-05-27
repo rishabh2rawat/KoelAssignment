@@ -36,4 +36,22 @@ public class EmployeeController {
 
     }
 
+    @GetMapping("/EmployeeByName/{name}")
+    public ResponseEntity<ResultModelApi> findEmployeeByName(@PathVariable String name)
+    {
+        ResponseModel response =service.findEmployeeByName(name);
+
+        return new ResponseEntity<ResultModelApi>(new ResultModelApi(false,"Finding Employee By Name",response),HttpStatus.OK);
+
+    }
+
+    @GetMapping("/EmployeeByEmail/{email}")
+    public ResponseEntity<ResultModelApi> findEmployeeByEmail(@PathVariable String email)
+    {
+        ResponseModel response =service.findEmployeeByEmail(email);
+        return new ResponseEntity<ResultModelApi>(new ResultModelApi(false,"Finding Employee By Email",response),HttpStatus.OK);
+    }
+
+
+
 }

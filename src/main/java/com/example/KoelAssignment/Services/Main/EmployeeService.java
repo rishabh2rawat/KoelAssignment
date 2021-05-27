@@ -55,6 +55,38 @@ public class EmployeeService implements IEmployeeService {
 
     }
 
+    @Override
+    public ResponseModel findEmployeeByName(String name) {
+
+        if(null==name || name=="" || name.length()==0)
+        {
+            return new ResponseModel(null, "Name Field Can not Be Empty");
+        }
+
+        List<Employee> employeeList =employeeRepository.findAllByName(name);
+
+        if(null==employeeList || employeeList.isEmpty())
+            return new ResponseModel(null,"No Employee Found with The Name Given");
+
+        return new ResponseModel(employeeList,"Employee Found");
+    }
+
+    @Override
+    public ResponseModel findEmployeeByEmail(String email) {
+
+        if(null==email || email.length()==0)
+            return new ResponseModel(null,"Email Can not Be Empty");
+
+        List<Employee> employeeList= employeeRepository.findAllByEmail(email);
+
+        if(null==employeeList || employeeList.isEmpty() )
+            return new ResponseModel(null , "No Employee Found");
+
+        return new ResponseModel(employeeList, "Employee Found");
+    }
+
+
+    // Return the List of Employee with the list of Employee Id
     public List<Employee> getEmployeeListFromEmpIdList(List<Integer> empIds)
     {
         return employeeRepository.findAllByEmpidIn(empIds);

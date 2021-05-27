@@ -17,4 +17,9 @@ public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
     List<Employee> findAllByEmpidIn(List<Integer> empids);
 
     boolean existsByEmail(String email);
+
+    List<Employee> findAllByName(String name);
+
+    List<Employee> findAllByEmail(String email);
+
 }

@@ -14,7 +14,7 @@ public interface IEmployeeService {
     ResponseModel addNewEmployee(EmploeeSaveInputModel emploeeSaveInputModel);
 
 
+    ResponseModel findEmployeeByName(String name);
 
-
-
+    ResponseModel findEmployeeByEmail(String email);
 }
