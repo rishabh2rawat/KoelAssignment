@@ -25,14 +25,14 @@ public class EmployeeController {
     public ResponseEntity<ResultModelApi> getAllEmployee()
     {
         List<EmployeeGetOutputModel> response= service.getEmployee();
-        return new ResponseEntity<ResultModelApi>(new ResultModelApi(false,"Data Fetched successfully",response), HttpStatus.OK );
+        return new ResponseEntity<ResultModelApi>(new ResultModelApi(false,"Fetching All Employee Data",response), HttpStatus.OK );
     }
 
     @PostMapping("/addEmployee")
     public ResponseEntity<ResultModelApi> addEmployee(@RequestBody EmploeeSaveInputModel emploeeSaveInputModel)
     {
        ResponseModel response =service.addNewEmployee(emploeeSaveInputModel);
-       return new ResponseEntity<ResultModelApi> (new ResultModelApi(false,response.getMessage(),response),HttpStatus.OK);
+       return new ResponseEntity<ResultModelApi> (new ResultModelApi(false,"Adding New Employee",response),HttpStatus.OK);
 
     }
 

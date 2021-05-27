@@ -36,7 +36,7 @@ public class TeamController {
 
             List<TeamGetOutputModel> response = service.showAllTeams();
 
-        return new ResponseEntity<ResultModelApi>(new ResultModelApi(false,"DataFetched Succes",response),HttpStatus.OK);
+        return new ResponseEntity<ResultModelApi>(new ResultModelApi(false,"Fetching All Team info",response),HttpStatus.OK);
     }
 
 
@@ -48,7 +48,7 @@ public class TeamController {
 
         ResponseModel response = service.addEmployeeToTeam(empid,teamid);
 
-        return new ResponseEntity<ResultModelApi>(new ResultModelApi(false,"Employee Added To Team",response.getMessage()),HttpStatus.OK);
+        return new ResponseEntity<ResultModelApi>(new ResultModelApi(false,"Adding Employee To Team",response.getMessage()),HttpStatus.OK);
     }
 
     @GetMapping("/listEmployee/{teamid}")

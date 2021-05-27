@@ -12,6 +12,8 @@ import com.example.KoelAssignment.Repository.TeamEmpRelRepository;
 import com.example.KoelAssignment.Repository.TeamRepository;
 import com.example.KoelAssignment.Services.ServiceInterface.ITeamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -58,12 +60,18 @@ public class TeamService implements ITeamService {
             return new ResponseModel(null, "Team Does not Exist");
 
 
+
         TeamEmpRel teamEmpRel = new TeamEmpRel();
         teamEmpRel.setEmpid(empid);
         teamEmpRel.setTeamid(teamid);
 
-        return new ResponseModel(teamEmpRelRepository.save(teamEmpRel), "Employee added To Team Success");
+        Example<TeamEmpRel> example =Example.of(teamEmpRel, ExampleMatcher.matching().withIgnorePaths("id"));
+        if(teamEmpRelRepository.exists(example))
+        {
+            return new ResponseModel(null, "Employee Already the member of the Team");
+        }
 
+        return new ResponseModel(teamEmpRelRepository.save(teamEmpRel), "Employee added To Team Success");
 
     }
 
@@ -83,9 +91,6 @@ public class TeamService implements ITeamService {
         return new ResponseModel(employeeList,"Fethed all Employee");
 
 
-
-
-
     }
 
     @Override
@@ -100,6 +105,5 @@ public class TeamService implements ITeamService {
             return new ResponseModel(null, "Team with the given Name already exist . Please try again");
 
         return new ResponseModel(teamRepository.save(TeamSaveInputModel.mapTeam(teamSaveInputModel)), "added Succes");
-
      }
 }
