@@ -20,7 +20,6 @@ public class EmployeeService implements IEmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-
     @Override
     public List<EmployeeGetOutputModel> getEmployee() {
 
@@ -36,19 +35,30 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public ResponseModel addNewEmployee(EmploeeSaveInputModel emploeeSaveInputModel) {
 
-        if(null != emploeeSaveInputModel) {
-
-            return new ResponseModel(employeeRepository.save(emploeeSaveInputModel.mapEmployee(emploeeSaveInputModel)), "Employee added Successfully");
+        if(null == emploeeSaveInputModel) {
+            return new ResponseModel(null, "Message Body Can not be Empty");
         }
-        else
+        if(emploeeSaveInputModel.getEmail()==null||emploeeSaveInputModel.getEmail()=="")
         {
-            return new ResponseModel(null,"Message Body Cn not be Empty");
+            return new ResponseModel(null, "Email Field is Mandatory");
         }
+        if(emploeeSaveInputModel.getName()==null || emploeeSaveInputModel.getName()=="")
+        {
+            return new ResponseModel(null, "Name Field is Mandatory");
+        }
+        if(employeeRepository.existsByEmail(emploeeSaveInputModel.getEmail()))
+        {
+            return new ResponseModel(null, "Employee Already Exist with the same Email");
+        }
+
+        return new ResponseModel(employeeRepository.save(emploeeSaveInputModel.mapEmployee(emploeeSaveInputModel)), "Employee added Successfully");
+
     }
 
-    public List<Employee> getEmployeeList(List<Integer> empIds)
+    public List<Employee> getEmployeeListFromEmpIdList(List<Integer> empIds)
     {
         return employeeRepository.findAllByEmpidIn(empIds);
+
     }
 
 

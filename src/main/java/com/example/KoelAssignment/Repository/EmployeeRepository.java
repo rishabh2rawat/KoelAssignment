@@ -13,8 +13,8 @@ import java.util.Map;
 public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
 
     Employee findAllByEmpid(int empid);
+
     List<Employee> findAllByEmpidIn(List<Integer> empids);
 
-
-
+    boolean existsByEmail(String email);
 }

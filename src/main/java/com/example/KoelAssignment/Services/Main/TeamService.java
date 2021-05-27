@@ -78,7 +78,7 @@ public class TeamService implements ITeamService {
                 .collect(Collectors.toList());
 
 
-        List<Employee> employeeList= employeeService.getEmployeeList(emplist);
+        List<Employee> employeeList= employeeService.getEmployeeListFromEmpIdList(emplist);
 
         return new ResponseModel(employeeList,"Fethed all Employee");
 
@@ -90,13 +90,16 @@ public class TeamService implements ITeamService {
 
     @Override
     public ResponseModel createNewTeam(TeamSaveInputModel teamSaveInputModel) {
-        if(null!=teamSaveInputModel) {
+        if(null==teamSaveInputModel)
+            return new ResponseModel(null, "All Fields can not be Empty");
 
-             return new ResponseModel(teamRepository.save(TeamSaveInputModel.mapTeam(teamSaveInputModel)), "added Succes");
-        }
-        else
-        {
-            return new ResponseModel(null, "Fields Can not be Empty");
-        }
+        if(null==teamSaveInputModel.getName() || teamSaveInputModel.getName()=="")
+            return new ResponseModel(null, "Name is Mandatory ");
+
+        if(teamRepository.existsByName(teamSaveInputModel.getName()))
+            return new ResponseModel(null, "Team with the given Name already exist . Please try again");
+
+        return new ResponseModel(teamRepository.save(TeamSaveInputModel.mapTeam(teamSaveInputModel)), "added Succes");
+
      }
 }
