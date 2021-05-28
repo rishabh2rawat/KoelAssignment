@@ -15,4 +15,8 @@ public interface ITeamService {
     ResponseModel addEmployeeToTeam(int empid, int teamid);
 
     ResponseModel listEmployeefromTeam(int teamid);
+
+    ResponseModel addEmployeeToTeamNewMapping(int empid, int teamid);
+
+    ResponseModel fetchTeamDatawithNewmapping(int teamid);
 }

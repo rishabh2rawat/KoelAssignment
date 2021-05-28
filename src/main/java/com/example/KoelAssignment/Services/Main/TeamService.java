@@ -56,7 +56,8 @@ public class TeamService implements ITeamService {
             return new ResponseModel(null, "Employee Does not Exist");
 
         Teams team = teamRepository.findAllByTeamid(teamid);
-        if (null == employee)
+
+        if (null == team)
             return new ResponseModel(null, "Team Does not Exist");
 
 
@@ -85,6 +86,8 @@ public class TeamService implements ITeamService {
         List<Integer> emplist = teamEmpRelRepository.findAllByTeamid(teamid).stream().map(obj->obj.getEmpid())
                 .collect(Collectors.toList());
 
+        if(null== emplist || emplist.isEmpty())
+            return new ResponseModel(null, "No Employee present in the Team");
 
         List<Employee> employeeList= employeeService.getEmployeeListFromEmpIdList(emplist);
 
@@ -92,6 +95,8 @@ public class TeamService implements ITeamService {
 
 
     }
+
+
 
     @Override
     public ResponseModel createNewTeam(TeamSaveInputModel teamSaveInputModel) {
@@ -106,4 +111,44 @@ public class TeamService implements ITeamService {
 
         return new ResponseModel(teamRepository.save(TeamSaveInputModel.mapTeam(teamSaveInputModel)), "added Succes");
      }
+
+
+    @Override
+    public ResponseModel addEmployeeToTeamNewMapping(int empid, int teamid) {
+
+        if(empid==0 || teamid==0)
+            return new ResponseModel(null,"TeamId And Employeeid cannot be empty");
+
+        Teams team=teamRepository.findOneByTeamid(teamid);
+
+        if(null==team)
+            return new ResponseModel(null,"No Team Exist with The Given Teamid");
+
+        Employee employee=employeeRepository.findByEmpid(empid);
+
+        if(null==employee)
+            return new ResponseModel(null,"No Employee Exist With The Given EmpID");
+
+        team.addEmployee(employee);
+
+        return new ResponseModel(teamRepository.save(team),"Employee Added To Team ");
+
+
+    }
+
+    @Override
+    public ResponseModel fetchTeamDatawithNewmapping(int teamid) {
+
+        if(teamid==0)
+            return new ResponseModel(null,"Team id Cannot be Nulla");
+
+        Teams team=teamRepository.findAllByTeamid(teamid);
+
+        if(null==team)
+            return new ResponseModel(null,"No team Found with The Given Team Id");
+
+        return new ResponseModel(team,"Team Data Found Success");
+
+
+    }
 }

@@ -7,7 +7,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TeamRepository extends JpaRepository<Teams,Integer> {
 
-    Teams findAllByTeamid(int teamid);
 
     boolean existsByName(String name);
+
+    Teams findAllByTeamid(int teamid);
+
+    Teams findByTeamid(int teamid);
+
+    Teams findOneByTeamid(int teamid);
 }

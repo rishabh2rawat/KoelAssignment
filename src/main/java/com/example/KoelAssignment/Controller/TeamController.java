@@ -39,8 +39,10 @@ public class TeamController {
         return new ResponseEntity<ResultModelApi>(new ResultModelApi(false,"Fetching All Team info",response),HttpStatus.OK);
     }
 
-
-    @PostMapping("/add/{empid}/team/{teamid}")
+// Used Old mapping using seprate relation table entity now changed to Many to Many mapping
+    
+    //
+   /* @PostMapping("/add/{empid}/team/{teamid}")
     public ResponseEntity<ResultModelApi> addEmployeeToTeam(
             @PathVariable int empid,
             @PathVariable int teamid)
@@ -49,15 +51,34 @@ public class TeamController {
         ResponseModel response = service.addEmployeeToTeam(empid,teamid);
 
         return new ResponseEntity<ResultModelApi>(new ResultModelApi(false,"Adding Employee To Team",response.getMessage()),HttpStatus.OK);
-    }
+    }*/
 
-    @GetMapping("/listEmployee/{teamid}")
+ /*   @GetMapping("/listEmployee/{teamid}")
 
     public ResponseEntity<ResultModelApi> listEmployeefromTeam(@PathVariable int teamid)
     {
         ResponseModel response=service.listEmployeefromTeam(teamid);
 
         return new ResponseEntity<ResultModelApi>(new ResultModelApi(false,response.getMessage(),response),HttpStatus.OK);
+
+    }*/
+
+    @PostMapping("/add/{empid}/toTeam/{teamid}")
+    public ResponseEntity<ResultModelApi> addEmployeeToTeam(@PathVariable int empid,
+                                                            @PathVariable int teamid)
+    {
+        ResponseModel response = service.addEmployeeToTeamNewMapping(empid, teamid);
+
+        return new ResponseEntity<ResultModelApi>(new ResultModelApi(false,"adding employee to Team with many to many mapping",response),HttpStatus.OK);
+    }
+
+    @GetMapping("/fetchTeamDatawithNewmapping/{teamid}")
+    public ResponseEntity<ResultModelApi> fetchTeamDataUsingTeamId(@PathVariable int teamid)
+    {
+
+        ResponseModel response=service.fetchTeamDatawithNewmapping(teamid);
+
+        return new ResponseEntity<ResultModelApi>(new ResultModelApi(false,"Fetching Team Data",response),HttpStatus.OK);
 
     }
 

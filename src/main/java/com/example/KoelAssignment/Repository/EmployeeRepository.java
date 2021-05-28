@@ -22,4 +22,5 @@ public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
 
     List<Employee> findAllByEmail(String email);
 
+    Employee findByEmpid(int empid);
 }
